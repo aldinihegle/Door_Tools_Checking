@@ -1,0 +1,28 @@
+<template>
+  <router-link to="/">Form Sederhana</router-link> |
+  <router-link to="/active-employees">Employee Aktif</router-link> |
+  <router-link to="/order-anomalies">Order Anomalies</router-link> |
+  <router-link to="/cek-absen-japati">Absen Japati</router-link> |
+  <router-link to="/double-jobs">Double Job</router-link> |
+  <router-link to="/double-attendance">Double Attendance</router-link> |
+  <router-link to="/expired-jobs">Expired Job</router-link> |
+  <router-link to="/empty-orderflow">Empty Order Flow</router-link> |
+  <router-view />
+</template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
