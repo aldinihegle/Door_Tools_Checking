@@ -10,7 +10,7 @@ import { HrModule } from './hr/hr.module';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client', 'dist'),
-      exclude: ['/api/(.*)'], 
+      exclude: ['/api'], // HANYA path statis!
     }),
     DatabaseModule,
     HrModule, 

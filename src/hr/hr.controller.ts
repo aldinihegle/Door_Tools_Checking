@@ -5,6 +5,7 @@ import { DoubleJobQueryDto } from './dto/double-job.dto';
 import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { DoubleAttendanceQueryDto } from './dto/double-attendance.dto';
 import { EmptyOrderFlowQueryDto } from './dto/empty-orderflow.dto';
+import { ComparePayrollDto } from './dto/compare-payroll.dto';
 
 @Controller('hr')
 export class HrController {
@@ -75,6 +76,65 @@ export class HrController {
     } catch (e) {
       throw new InternalServerErrorException(e.message);
     }
+  }
+
+  @Get('compare-payroll')
+  async comparePayroll(
+    @Query('period_now') period_now: string,
+    @Query('period_prev') period_prev: string,
+  ) {
+    return await this.hrService.getPayrollComparison(period_now, period_prev);
+  }
+
+  @Get('compare-trial-deduction')
+  async compareTrialDeduction(
+    @Query('period_now') period_now: string,
+    @Query('period_prev') period_prev: string,
+  ) {
+    return await this.hrService.getTrialDeductionComparison(period_now, period_prev);
+  }
+
+  @Get('compare-koperasi-deduction')
+  async compareKoperasiDeduction(
+    @Query('period_now') period_now: string,
+    @Query('period_prev') period_prev: string,
+  ) {
+    return await this.hrService.getKoperasiDeductionComparison(period_now, period_prev);
+  }
+
+  @Get('compare-mart-meal')
+  async compareMartMeal(
+    @Query('period') period: string,
+  ) {
+    return await this.hrService.getMartMealComparison(period);
+  }
+
+  @Get('compare-pemantra-attendance')
+  async comparePemantraAttendance(
+    @Query('period') period: string,
+  ) {
+    return await this.hrService.getPemantraAttendanceComparison(period);
+  }
+
+  @Get('payroll-instances')
+  async getPayrollInstances() {
+    return await this.hrService.getPayrollInstances();
+  }
+
+  @Get('payroll-periods')
+  async getPayrollPeriods() {
+    const periods = await this.hrService.getPayrollPeriods();
+    return { success: true, data: periods };
+  }
+
+  @Get('compare-overtime')
+  async compareOvertime(@Query('period') period: string) {
+    return await this.hrService.getOvertimeComparison(period);
+  }
+
+  @Get('compare-holiday-overtime')
+  async compareHolidayOvertime(@Query('period') period: string) {
+    return await this.hrService.getHolidayOvertimeComparison(period);
   }
 }
 

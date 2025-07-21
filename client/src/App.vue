@@ -7,9 +7,16 @@
   <router-link to="/double-attendance">Double Attendance</router-link> |
   <router-link to="/expired-jobs">Expired Job</router-link> |
   <router-link to="/empty-orderflow">Empty Order Flow</router-link> |
-  <router-view />
+  <router-link to="/komparasi-payroll">Komparasi Payroll</router-link> |
+  <router-link to="/komparasi-potongan-trial">Komparasi Potongan Trial</router-link> |
+  <router-link to="/komparasi-potongan-koperasi">Komparasi Potongan Koperasi</router-link> |
+  <router-link to="/komparasi-mart-meal">Komparasi Mart Meal</router-link> |
+  <router-link to="/komparasi-pemantra-attendance">Komparasi Pemantra Attendance</router-link> |
+  <router-link to="/komparasi-lembur">Komparasi Lembur</router-link> |
+  <router-link to="/komparasi-lembur-libur">Komparasi Lembur Libur</router-link> |
+ <router-view />
 </template>
-
+  
 <script>
 export default {
   name: 'App'
