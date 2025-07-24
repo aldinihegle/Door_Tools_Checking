@@ -5,6 +5,9 @@ import { ServeStaticModule} from '@nestjs/serve-static';
 import { join } from 'path';
 import { DatabaseModule } from './database/database.module';
 import { HrModule } from './hr/hr.module';
+import { PayrollModule } from './payroll/payroll.module';
+import { AttdModule } from './attendance/attd.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -14,6 +17,9 @@ import { HrModule } from './hr/hr.module';
     }),
     DatabaseModule,
     HrModule, 
+    PayrollModule,
+    AttdModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
