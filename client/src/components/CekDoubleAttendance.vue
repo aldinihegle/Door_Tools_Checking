@@ -52,10 +52,18 @@ async function fetchDoubleAttendance() {
   loading.value = true
   searched.value = false
   try {
-    const url = `/api/hr/double-attendance?start=${start.value}&end=${end.value}`
+    const url = `/api/attendance/double?start=${start.value}&end=${end.value}`
     const res = await fetch(url)
     const json = await res.json()
-    data.value = json.data || []
+
+    if (json.success) {
+      data.value = json.data || []
+    } else {
+      // Handle error if needed, e.g., show a message
+      console.error('Error fetching double attendance:', json.message)
+    }
+  } catch (error) {
+    console.error('Error fetching double attendance:', error)
   } finally {
     loading.value = false
     searched.value = true

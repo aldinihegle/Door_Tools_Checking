@@ -1,6 +1,5 @@
 <template>
-  <router-link to="/">Form Sederhana</router-link> |
-  <router-link to="/active-employees">Employee Aktif</router-link> |
+  <h1>Tools-Checking</h1>
   <router-link to="/order-anomalies">Order Anomalies</router-link> |
   <router-link to="/cek-absen-japati">Absen Japati</router-link> |
   <router-link to="/double-jobs">Double Job</router-link> |

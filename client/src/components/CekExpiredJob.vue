@@ -31,11 +31,25 @@
 import { ref, onMounted } from 'vue'
 
 const data = ref([])
+const loading = ref(false)
+const error = ref('')
 
 async function fetchExpiredJobs() {
-  const res = await fetch('/api/hr/expired-jobs')
-  const json = await res.json()
-  data.value = json.data || []
+  loading.value = true
+  error.value = ''
+  try {
+    const res = await fetch('/api/order/expired-jobs')
+    const json = await res.json()
+    if(json.success) {
+      data.value = json.data || []
+    } else {
+      error.value = json.message || 'Gagal mengambil data'
+    }
+  } catch (e) {
+    console.error('Error fetching expired jobs:', error)
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(fetchExpiredJobs)

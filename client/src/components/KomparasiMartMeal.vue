@@ -53,7 +53,7 @@ const error = ref('')
 
 async function fetchPeriods() {
   try {
-    const res = await fetch('/api/hr/payroll-periods')
+    const res = await fetch('/api/payroll/periods')
     const data = await res.json()
     if (data.success && Array.isArray(data.data)) {
       periods.value = data.data
@@ -73,7 +73,7 @@ async function fetchComparison() {
   error.value = ''
   comparison.value = []
   try {
-    const url = `/api/hr/compare-mart-meal?period=${period.value}`
+    const url = `/api/payroll/compare-mart-meal?period=${period.value}`
     const res = await fetch(url)
     if (!res.ok) throw new Error('Gagal mengambil data komparasi')
     const data = await res.json()

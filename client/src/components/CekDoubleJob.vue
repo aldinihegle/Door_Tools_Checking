@@ -38,7 +38,7 @@ const loading = ref(true)
 
 async function fetchDoubleJobs() {
   loading.value = true
-  const res = await fetch('/api/hr/double-jobs')
+  const res = await fetch('/api/order/double-jobs')
   const data = await res.json()
   doubleJobs.value = data.data || []
   loading.value = false

@@ -211,7 +211,7 @@ async function checkLocation() {
   loading.value = true;
   error.value = null;
   try {
-    let url = `/api/hr/check-location-attendance`;
+    let url = `/api/attendance/check-location`;
     if (selectedDate.value) {
       url += `?date=${encodeURIComponent(selectedDate.value)}`;
     }

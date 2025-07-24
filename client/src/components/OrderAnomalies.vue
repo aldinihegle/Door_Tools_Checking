@@ -62,9 +62,10 @@ async function fetchAnomalies() {
   loading.value = true // Mulai loading
   searched.value = false
   try {
-    const url = `http://localhost:3000/api/hr/order-anomalies?start=${start.value}&end=${end.value}`
+    const url = `/api/order/anomalies?start=${start.value}&end=${end.value}`
     const res = await fetch(url)
-    orders.value = await res.json()
+    const json = await res.json()
+    orders.value = json || []
   } finally {
     loading.value = false // Selesai loading
     searched.value = true

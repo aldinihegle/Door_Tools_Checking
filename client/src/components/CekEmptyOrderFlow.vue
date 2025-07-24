@@ -54,10 +54,17 @@ async function fetchEmptyOrderFlow() {
   loading.value = true
   searched.value = false
   try {
-    const url = `/api/hr/empty-orderflow?start=${start.value}&end=${end.value}`
+    const url = `/api/order/empty-flow?start=${start.value}&end=${end.value}`
     const res = await fetch(url)
     const json = await res.json()
-    data.value = json.data || []
+    if (json.success) {
+      data.value = json.data || []
+    } else {
+      // Handle error if needed, e.g., show a message
+      console.error('Failed to fetch empty order flow:', json.message);
+    }
+  } catch (error) {
+    console.error('Error fetching empty order flow:', error);
   } finally {
     loading.value = false
     searched.value = true
