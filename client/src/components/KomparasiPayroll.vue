@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Komparasi Payroll</h2>
-    <form @submit.prevent="fetchComparison">
+    <form @submit.prevent="handleSubmit">
       <div>
         <label>Periode Sekarang:</label>
         <select v-model="periodNow" required>
@@ -34,9 +34,9 @@
         <tr v-for="row in comparison" :key="row.code">
           <td>{{ row.code }}</td>
           <td>{{ row.name }}</td>
-          <td>{{ row.total_gaji_now ?? 0 }}</td>
-          <td>{{ row.total_gaji_prev ?? 0 }}</td>
-          <td :style="{ color: row.diff > 0 ? 'green' : row.diff < 0 ? 'red' : 'black' }">{{ row.diff }}</td>
+          <td>{{ formatRupiah(row.total_gaji_now ?? 0) }}</td>
+          <td>{{ formatRupiah(row.total_gaji_prev ?? 0) }}</td>
+          <td :style="{ color: row.diff > 0 ? 'green' : row.diff < 0 ? 'red' : 'black' }">{{ formatRupiah(row.diff) }}</td>
         </tr>
       </tbody>
     </table>
@@ -46,51 +46,37 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useComparison } from '@/composables/useComparison'
+import { formatRupiah } from '@/composables/formatRupiah'
 
-const periods = ref([])
 const periodNow = ref('')
 const periodPrev = ref('')
-const comparison = ref([])
-const loading = ref(false)
-const error = ref('')
 
-async function fetchPeriods() {
-  try {
-    const res = await fetch('/api/payroll/periods')
-    const data = await res.json()
-    if (data.success && Array.isArray(data.data)) {
-      periods.value = data.data
-      if (periods.value.length > 1) {
-        periodNow.value = periods.value[0]
-        periodPrev.value = periods.value[1]
-      } else if (periods.value.length === 1) {
-        periodNow.value = periods.value[0]
-        periodPrev.value = periods.value[0]
-      }
-    } else {
-      error.value = 'Gagal mengambil daftar periode'
-    }
-  } catch (e) {
-    error.value = 'Gagal mengambil daftar periode'
+const {
+  periods,
+  loading,
+  error,
+  comparison,
+  fetchPeriods,
+  fetchComparison
+} = useComparison(
+  '/api/payroll/periods',
+  ({ period_now, period_prev }) => `/api/payroll/compare?period_now=${period_now}&period_prev=${period_prev}&instance_id=62`
+)
+
+onMounted(async () => {
+  await fetchPeriods()
+  if (periods.value.length > 1) {
+    periodNow.value = periods.value[0]
+    periodPrev.value = periods.value[1]
+  } else if (periods.value.length === 1) {
+    periodNow.value = periods.value[0]
+    periodPrev.value = periods.value[0]
   }
-}
+  if (periodNow.value && periodPrev.value) fetchComparison({ period_now: periodNow.value, period_prev: periodPrev.value })
+});
 
-async function fetchComparison() {
-  loading.value = true
-  error.value = ''
-  comparison.value = []
-  try {
-    const url = `/api/payroll/compare?period_now=${periodNow.value}&period_prev=${periodPrev.value}&instance_id=62`
-    const res = await fetch(url)
-    if (!res.ok) throw new Error('Gagal mengambil data komparasi')
-    const data = await res.json()
-    comparison.value = Array.isArray(data) ? data : (data.data || [])
-  } catch (e) {
-    error.value = e.message
-  } finally {
-    loading.value = false
-  }
+function handleSubmit() {
+  fetchComparison({ period_now: periodNow.value, period_prev: periodPrev.value })
 }
-
-onMounted(fetchPeriods)
 </script>

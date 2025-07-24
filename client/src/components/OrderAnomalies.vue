@@ -49,11 +49,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
+function today() {
+  return new Date().toISOString().split('T')[0];
+}
 
 const orders = ref([])
-const start = ref('')
-const end = ref('')
+const start = ref(today())
+const end = ref(today())
 const searched = ref(false)
 const loading = ref(false) // ← Tambahkan ini
 
@@ -71,4 +75,8 @@ async function fetchAnomalies() {
     searched.value = true
   }
 }
+
+onMounted(() => {
+  fetchAnomalies();
+});
 </script>

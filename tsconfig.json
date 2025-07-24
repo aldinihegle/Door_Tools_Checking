@@ -17,5 +17,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "exclude": [
+    "client/src/components/HelloWorld.vue"
+  ]
 }

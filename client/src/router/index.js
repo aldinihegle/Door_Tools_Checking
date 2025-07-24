@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HelloWorld from '../components/HelloWorld.vue'
 import ActiveEmployees from '../components/ActiveEmployees.vue'
 import OrderAnomalies from '../components/OrderAnomalies.vue'
 import CekAbsenJapati from '@/components/CekAbsenJapati.vue';
@@ -14,9 +13,10 @@ import KomparasiMartMeal from '../components/KomparasiMartMeal.vue';
 import KomparasiPemantraAttendance from '../components/KomparasiPemantraAttendance.vue';
 import KomparasiLembur from '../components/KomparasiLembur.vue';
 import KomparasiLemburLibur from '../components/KomparasiLemburLibur.vue';
+import DashboardMenu from '../components/Dashboard.vue';
 
 const routes = [
-  { path: '/', component: HelloWorld },
+  { path: '/', component: DashboardMenu }, // Dashboard jadi halaman utama
   { path: '/active-employees', component: ActiveEmployees },
   { path: '/order-anomalies', component: OrderAnomalies },
   {

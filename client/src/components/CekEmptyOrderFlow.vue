@@ -41,11 +41,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
+function today() {
+  return new Date().toISOString().split('T')[0];
+}
 
 const data = ref([])
-const start = ref('')
-const end = ref('')
+const start = ref(today())
+const end = ref(today())
 const searched = ref(false)
 const loading = ref(false)
 
@@ -58,7 +62,7 @@ async function fetchEmptyOrderFlow() {
     const res = await fetch(url)
     const json = await res.json()
     if (json.success) {
-      data.value = json.data || []
+    data.value = json.data || []
     } else {
       // Handle error if needed, e.g., show a message
       console.error('Failed to fetch empty order flow:', json.message);
@@ -70,4 +74,8 @@ async function fetchEmptyOrderFlow() {
     searched.value = true
   }
 }
+
+onMounted(() => {
+  fetchEmptyOrderFlow();
+});
 </script>
